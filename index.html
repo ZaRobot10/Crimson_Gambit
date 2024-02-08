@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chessboard</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Write your code here */
+    /* Each square should be 100px by 100px */
+    /* My colours for white: #f0d9b5, black: #b58863 */
+
+    .container{
+      /* width: 51.8%; */
+      
+      width: 800px;
+      /* height: 800px; */
+      
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      /* grid-template-areas:
+    "image1 image2 image3 image4 image5 image6 image7 image8"
+    "image9 image10 image11 image12 image13 image14 image15 image16"
+    "image17 image18 image19 image20 image21 image22 image23 image24"
+    "image25 image26 image27 image28 image29 image30 image31 image32"
+    "image33 image34 image35 image36 image37 image38 image39 image40"
+    "image41 image42 image43 image44 image45 image46 image47 image48"
+    "image49 image50 image51 image52 image53 image54 image55 image56"
+    "image57 image58 image59 image60 image61 image62 image63 image64"; */
+    }
+
+   
+
+    .container > *
+    {
+      width: 100px;
+      height: 100px;
+    }
+
+    .white{
+      background-color: #f0d9b5;
+    }
+
+    .black{
+      background-color: #b58863;
+    }
+
+    /* .img1{
+      grid-area: image1;
+
+    } */
+
+    img
+    {
+      width: 100%;
+      height: 100%;
+     
+    }
+    
+/* @media (max-width: 800px) {
+  Write your styles here
+  .container {
+    width: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+  
+  /* .container > * {
+    width: 25%;
+  } 
+} */
+    
+
+@media (max-width: 800px) {
+  .container {
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+  
+  .container > * {
+    width: 25%;
+  }
+}
+
+
+  </style>
+</head>
+
+
+<body>
+  <div class="who_playing">
+  <div class="container">
+    <!-- <div class="white"></div>
+    <div class="black"> -->
+      <!-- <div class="img1">
+      <img src="./images/pawn.png" alt="white-rook">
+      </div> -->
+    <!-- </div> -->
+    <!-- <div class="white 1"><img class="white-piece" src="./images/pawn.png" alt="white-rook"></div> -->
+    <!-- <div class="white 1 piece"><img class = "white-piece pawn" src="./images/pawn.png" alt="white-rook"></div> -->
+    <div class="white 1"></div>
+    <div class="black 2"></div>
+    <div class="white 3"></div>
+    <div class="black 4"></div>
+    <div class="white 5"></div>
+    <div class="black 6">
+      <!-- <img class = "move" src="./images/new_dot.png" alt=""> -->
+    </div>
+    <div class="white 7"></div>
+    <div class="black 8"></div>
+    <div class="black 9"></div>
+    <div class="white 10"></div>
+    <div class="black 11"></div>
+    <div class="white 12"></div>
+    <div class="black 13"></div>
+    <div class="white 14"></div>
+    <div class="black 15"></div>
+    <div class="white 16"></div>
+    <div class="white 17"></div>
+    <div class="black 18"></div>
+    <div class="white 19"></div>
+    <div class="black 20"></div>
+    <!-- <div class="white 21 piece">
+      <img class = " black-piece pawn" src="./images/black_pawn.png" alt="Your Image">
+      <div class="top-right">1</div>
+    </div> -->
+    <div class="white 21"></div>
+    <div class="black 22"></div>
+    <div class="white 23"></div>
+    <div class="black 24"></div>
+    <div class="black 25 ">
+      <!-- <div class="image-container">
+        <div class="circle"></div>
+        <img class = "image white-piece pawn" src="./images/pawn.png" alt="Your Image">
+    </div> -->
+    <!-- <img class = "image white-piece pawn" src="./images/pawn.png" alt="Your Image"> -->
+   
+        <!-- <img class = "circle white-piece pawn" src="./images/pawn.png" alt="Your Image"> -->
+        <!-- <div class="circle"></div> -->
+
+    
+    </div>
+    <div class="white 26"></div>
+    <div class="black 27"></div>
+    <div class="white 28"></div>
+    <div class="black 29"></div>
+    <div class="white 30"></div>
+    <div class="black 31"></div>
+    <div class="white 32"></div>
+    <div class="white 33"></div>
+    <div class="black 34"></div>
+    <div class="white 35"></div>
+    <div class="black 36"></div>
+    <div class="white 37"></div>
+    <div class="black 38"></div>
+    <div class="white 39"></div>
+    <div class="black 40"></div>
+    <div class="black 41"></div>
+    <div class="white 42"></div>
+    <div class="black 43"></div>
+    <div class="white 44"></div>
+    <div class="black 45"></div>
+    <div class="white 46"></div>
+    <div class="black 47"></div>
+    <div class="white 48"></div>
+    <div class="white 49"></div>
+    <div class="black 50"></div>
+    <div class="white 51"></div>
+    <div class="black 52"></div>
+    <div class="white 53"></div>
+    <div class="black 54"></div>
+    <div class="white 55"></div>
+    <div class="black 56"></div>
+    <div class="black 57"></div>
+    <div class="white 58"></div>
+    <div class="black 59"></div>
+    <div class="white 60"></div>
+    <div class="black 61"></div>
+    <div class="white 62"></div>
+    <div class="black 63"></div>
+    <div class="white 64"></div>
+  </div>
+
+  <div class="whos-turn">
+    <h1>White's Turn</h1>
+    <h2>Place Your Queen</h2>
+
+    <button class="upgrade daqueen">Upgrade Your Queen</button>
+    <button class="upgrade darook">Upgrade Your Rook</button>
+  </div>
+</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="./index.js"></script>
+  
+</body>
+
+</html>
+
