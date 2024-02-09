@@ -18,21 +18,53 @@
             <img src="./images/level_2_rook.png" alt="" width="350px" height="350px">
         </div>
 
-        <h3>Level 1 - means that piece can move till one square &nbsp; &nbsp; &nbsp;Level 2 - means that piece can move till two squares</h3>
+        <h3 class="to-change">Level 1 - means that piece can move till one square &nbsp; &nbsp; &nbsp;Level 2 - means that piece can move till two squares</h3>
+        <h3 class="to-change-to">Level 1 - means that piece can move till one square <br>Level 2 - means that piece can move till two squares</h3>
         <!-- <h3>Level 2 - means that piece can move till two spaces</h3> -->
 
         <h2>2. Players will now have 5 moves each, which will be played turnwise. <br> They can either place a pawn or Upgrade their queen or rook</h2>
 
+        
+
         <h2>How to Win?</h2>
 
-        <h3>1. If a player reaches the opponents red square, they win.</h3>
-        <h3>2. If a player captures all the opponents pieces they win.</h3>
+        <h3 >1. If a player reaches the opponents red square, they win.</h3>
+        <h3 >2. If a player captures all the opponents pieces they win.</h3>
+
+       
 
         <button id="next">Play</button>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
         document.getElementById("next").addEventListener("click", function() {
             window.location.href = "./game.html";
         });
+
+     
+
+            function checkMediaQuery() 
+            {
+                if (window.matchMedia("(max-width: 768px)").matches) 
+                {
+                    // Code to execute when viewport width is 768px or less
+                    $(".to-change").hide();
+                    $(".to-change-to").show();
+                    
+
+                } 
+
+                else 
+                {
+                    // Code to execute when viewport width is greater than 768px
+                    $(".to-change-to").hide();
+                }
+            }
+
+        // Call the function initially
+        checkMediaQuery();
+
+        // Add event listener to window resize event
+        window.addEventListener('resize', checkMediaQuery);
         </script>
 
     </div>
