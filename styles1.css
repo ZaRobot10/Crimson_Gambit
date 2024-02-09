@@ -38,3 +38,14 @@ a {
     color: inherit; /* Inherits color from parent element */
 }
 
+
+@media (max-width: 768px) {
+    .container2{
+        flex-direction: column;
+    }
+    
+}
+
+
+
+
