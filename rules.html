@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles1.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rules</h1>
+    
+       <h2>1. Firstly both players will place their queens and rooks. <br> You can only place pieces in the first 3 rows <br>These pieces will have a level. <br> The white queen and rook will be level 2 <br> The black queen will be level 3 and the black rook will be level 2</h2>
+
+        <h2> Levels Explained</h2>
+        <div class="container2">
+            <img src="./images/level_1_rook.png" alt="" width="350px" height="350px">
+            <img src="./images/level_2_rook.png" alt="" width="350px" height="350px">
+        </div>
+
+        <h3>Level 1 - means that piece can move till one square &nbsp; &nbsp; &nbsp;Level 2 - means that piece can move till two squares</h3>
+        <!-- <h3>Level 2 - means that piece can move till two spaces</h3> -->
+
+        <h2>2. Players will now have 5 moves each, which will be played turnwise. <br> They can either place a pawn or Upgrade their queen or rook</h2>
+
+        <h2>How to Win?</h2>
+
+        <h3>1. If a player reaches the opponents red square, they win.</h3>
+        <h3>2. If a player captures all the opponents pieces they win.</h3>
+
+        <button id="next">Play</button>
+        <script>
+        document.getElementById("next").addEventListener("click", function() {
+            window.location.href = "./index.html";
+        });
+        </script>
+
+    </div>
+    
+</body>
+</html>
+
