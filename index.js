@@ -16,8 +16,8 @@ var black_queen_level = 3;
 
 var gameover = false;
 
-var black_pieces = 2;
-var white_pieces = 2;
+var black_pieces = 7;
+var white_pieces = 7;
 
 // make a random cell in the top 2 rows red and a an random cell in the bottom 2 cell have a class called victory
 
