@@ -16,33 +16,40 @@ var black_queen_level = 3;
 
 var gameover = false;
 
-var black_pieces = 7;
-var white_pieces = 7;
+var black_pieces = 8;
+var white_pieces = 8;
+
+var promotion = false;
+
+var moves_left = 6;
 
 // make a random cell in the top 2 rows red and a an random cell in the bottom 2 cell have a class called victory
 
 $(".upgrade").toggle();
 
-// 1 to 16
-var top_red = Math.floor(Math.random() * 16) + 1;
+// 1 to 8
+// 9 to 16
+var top_red = Math.floor(Math.random() * 8) + 1;
+top_red += 8;
 
 // if it is in corner find it again
 while (top_red == 1 || top_red == 8 || top_red == 9 || top_red == 16)
 {
     console.log(top_red);
-    top_red = Math.floor(Math.random() * 16) + 1;
+    top_red = Math.floor(Math.random() * 8) + 1;
+    top_red += 8;
     
 }
 
 
-// 1 to 16
-var bottom_red = Math.floor(Math.random() * 16) + 1;
+// 1 to 8
+var bottom_red = Math.floor(Math.random() * 8) + 1;
 bottom_red += 48;
 
 while (bottom_red == 49 || bottom_red == 56 || bottom_red == 57 || bottom_red == 64)
 {
     console.log(bottom_red);
-    bottom_red = Math.floor(Math.random() * 16) + 1;
+    bottom_red = Math.floor(Math.random() * 8) + 1;
     bottom_red += 48;
     
 }
@@ -58,7 +65,7 @@ surroundBlackRedPiece();
 
 $(".upgrade").click(function()
 {
-    
+  
     if (moves >= 5 && moves <= 14)
     {
         var is_queen = $(this).hasClass("daqueen");
@@ -100,16 +107,92 @@ $(".upgrade").click(function()
             }
         }
 
+       
+
         whos_playing ++;
+
+        if (whos_playing % 2 == 0)
+        {
+            $(".small_icon_queen").attr("src", "./images/white_queen.png");
+            $(".small_icon_rook").attr("src", "./images/white_rook.png");
+
+
+            moves_left --;
+            $(".whos-turn h3").html("Moves left before the battle begins: " + moves_left);
+
+        }
+
+        else
+        {
+            $(".small_icon_queen").attr("src", "./images/black_queen.png");
+            $(".small_icon_rook").attr("src", "./images/black_rook.png");
+        }
         $(".whos-turn h1").html(playing[whos_playing % 2]);
 
         if (moves == 15)
         {
             $(".whos-turn h2").html("Win the game");
             $(".upgrade").fadeOut();
+            $(".whos-turn h3").toggle();
+
+            $(".daqueen").html('Promote to Knight <img class="small_icon_queen" src="./images/white_queen.png" alt="">');
+            $(".darook").html('Promote to Bishop <img class="small_icon_rook" src="./images/white_rook.png" alt="">');
+           
         }
 
 
+    }
+
+    if (promotion)
+    {
+        
+        // the first option will be the knight, which has a class of daqueen
+
+        var is_knight = $(this).hasClass("daqueen");
+        if (whos_playing % 2 == 0)
+        {
+            if (is_knight)
+            {
+                
+                $("." + (prev_index + 1) + " img").attr("src", "./images/white_knight.png");
+                $("." + (prev_index + 1) + " img").toggleClass("knight");
+                $("." + (prev_index + 1) + " img").toggleClass("pawn");
+            }
+
+            else
+            {
+                $("." + (prev_index + 1) + " img").attr("src", "./images/white_bishop.png");
+                $("." + (prev_index + 1) + " img").toggleClass("bishop");
+                $("." + (prev_index + 1) + " img").toggleClass("pawn");
+            }
+        }
+
+        else
+        {
+            if (is_knight)
+            {
+                $("." + (prev_index + 1) + " img").attr("src", "./images/black_knight.png");
+                $("." + (prev_index + 1) + " img").toggleClass("knight");
+                $("." + (prev_index + 1) + " img").toggleClass("pawn");
+            }
+
+            else
+            {
+                $("." + (prev_index + 1) + " img").attr("src", "./images/black_bishop.png");
+                $("." + (prev_index + 1) + " img").toggleClass("bishop");
+                $("." + (prev_index + 1) + " img").toggleClass("pawn");
+            }
+        }
+
+        promotion = false;
+        $(".upgrade").fadeOut();
+
+        whos_playing ++;
+        $(".whos-turn h2").html("Win the game");
+        $(".whos-turn h1").html(playing[whos_playing % 2]);
+
+
+       
     }
 })
 
@@ -165,6 +248,8 @@ $('.container > *').click(function() {
                     moves ++;
                     whos_playing ++;
                     $(".whos-turn h1").html(playing[whos_playing % 2]);
+                    $(".small_icon_queen").attr("src", "./images/black_queen.png");
+                    $(".small_icon_rook").attr("src", "./images/black_rook.png");
                     white_pieces ++;
                    
                 }
@@ -202,6 +287,9 @@ $('.container > *').click(function() {
                     $(".whos-turn h1").html(playing[whos_playing % 2]);
                     $(".whos-turn h2").html("Either place your pawn or upgrade your queen or rook");
                     $(".upgrade").fadeIn();
+
+                    moves_left --;
+                    $(".whos-turn h3").html("Moves left before the battle begins: " + moves_left);
                 }
             }
 
@@ -215,6 +303,11 @@ $('.container > *').click(function() {
                     whos_playing ++;
                     $(".whos-turn h1").html(playing[whos_playing % 2]);
                     black_pieces ++;
+                    $(".small_icon_queen").attr("src", "./images/white_queen.png");
+                    $(".small_icon_rook").attr("src", "./images/white_rook.png");
+
+                    moves_left --;
+                    $(".whos-turn h3").html("Moves left before the battle begins: " + moves_left);
                     
                 }
             }
@@ -225,13 +318,14 @@ $('.container > *').click(function() {
         {
             $(".whos-turn h2").html("Win the game");
             $(".upgrade").fadeOut();
+            $(".whos-turn h3").toggle();
         }
 
     }
 
     else
     { 
-        if (gameover == false)
+        if (gameover == false && promotion == false)
         {
 
         
@@ -284,6 +378,26 @@ $('.container > *').click(function() {
                         else if ($(s).hasClass("black-piece") && $(s).hasClass("queen"))
                         {
                             moveBlackQueen(index);
+                        }
+
+                        else if ($(s).hasClass("white-piece") && $(s).hasClass("knight"))
+                        {
+                            moveWhiteKnight(index);
+                        }
+
+                        else if ($(s).hasClass("black-piece") && $(s).hasClass("knight"))
+                        {
+                            moveBlackKnight(index);
+                        }
+
+                        else if ($(s).hasClass("white-piece") && $(s).hasClass("bishop"))
+                        {
+                            moveWhiteBishop(index);
+                        }
+
+                        else if ($(s).hasClass("black-piece") && $(s).hasClass("bishop"))
+                        {
+                            moveBlackBishop(index);
                         }
 
                     }
@@ -357,6 +471,37 @@ $('.container > *').click(function() {
                                 gameover = true;
                             
                             }
+                            
+                            if (!gameover)
+                            {
+
+                                if ( $("." + (index + 1) + " img").hasClass("white-piece") && $("." + (index + 1) + " img").hasClass("pawn") && index + 1 <= 8)
+                                {
+                                    whos_playing ++;
+                                    $(".whos-turn h1").html(playing[whos_playing % 2]);
+                                    console.log("upgrade");
+                                    $(".whos-turn h2").html("Promote your pawn to a knight or a bishop");
+                                    promotion = true;
+                                    $(".upgrade").fadeIn();
+
+                                    $(".small_icon_queen").attr("src", "./images/white_knight.png");
+                                    $(".small_icon_rook").attr("src", "./images/white_bishop.png");
+                                }
+
+                                else if ( $("." + (index + 1) + " img").hasClass("black-piece") && $("." + (index + 1) + " img").hasClass("pawn") && index + 1 >= 57)
+                                {
+                                    whos_playing ++;
+                                    $(".whos-turn h1").html(playing[whos_playing % 2]);
+                                    console.log("upgrade");
+                                    $(".whos-turn h2").html("Promote your pawn to a knight or a bishop");
+                                    promotion = true;
+                                    $(".upgrade").fadeIn();
+
+                                    $(".small_icon_queen").attr("src", "./images/black_knight.png");
+                                    $(".small_icon_rook").attr("src", "./images/black_bishop.png");
+                                }
+                                
+                            }
 
                         }
 
@@ -400,6 +545,26 @@ $('.container > *').click(function() {
                             {
                                 moveBlackQueen(index);
                             }
+
+                            else if ($(s).hasClass("white-piece") && $(s).hasClass("knight"))
+                            {
+                                moveWhiteKnight(index);
+                            }
+
+                            else if ($(s).hasClass("black-piece") && $(s).hasClass("knight"))
+                            {
+                                moveBlackKnight(index);
+                            }
+
+                            else if ($(s).hasClass("white-piece") && $(s).hasClass("bishop"))
+                            {
+                                moveWhiteBishop(index);
+                            }
+
+                            else if ($(s).hasClass("black-piece") && $(s).hasClass("bishop"))
+                            {
+                                moveBlackBishop(index);
+                            }
                         }
 
                     
@@ -411,6 +576,8 @@ $('.container > *').click(function() {
             else
             {
                 console.log("is_piece == 0");
+
+                // if piece is selected and cell is empty
                 if (is_selected == 1) 
                 {
                     
@@ -457,6 +624,35 @@ $('.container > *').click(function() {
                             $("h1").html(whos_playing % 2 == 1 ? "White Wins" : "Black Wins");
                             $("h2").html("Press R to restart the game");
                             gameover = true;
+                        }
+
+                        if (!gameover)
+                        {
+                            if ( $("." + (index + 1) + " img").hasClass("white-piece") && $("." + (index + 1) + " img").hasClass("pawn") && index + 1 <= 8)
+                            {
+                                whos_playing ++;
+                                $(".whos-turn h1").html(playing[whos_playing % 2]);
+                                console.log("upgrade");
+                                $(".whos-turn h2").html("Promote your pawn to a knight or a bishop");
+                                promotion = true;
+                                $(".upgrade").fadeIn();
+
+                                $(".small_icon_queen").attr("src", "./images/white_knight.png");
+                                $(".small_icon_rook").attr("src", "./images/white_bishop.png");
+                            }
+
+                            else if ( $("." + (index + 1) + " img").hasClass("black-piece") && $("." + (index + 1) + " img").hasClass("pawn") && index + 1 >= 57)
+                            {
+                                whos_playing ++;
+                                $(".whos-turn h1").html(playing[whos_playing % 2]);
+                                console.log("upgrade");
+                                $(".whos-turn h2").html("Promote your pawn to a knight or a bishop");
+                                promotion = true;
+                                $(".upgrade").fadeIn();
+
+                                $(".small_icon_queen").attr("src", "./images/black_knight.png");
+                                $(".small_icon_rook").attr("src", "./images/black_bishop.png");
+                            }
                         }
 
 
@@ -1624,6 +1820,660 @@ function moveBlackQueen(index)
 
 }
 
+
+    function moveWhiteKnight(index)
+    {
+
+        var current_s = "." + (index + 1);
+        var up_right = (index + 1) - 8 - 8 + 1;
+        var up_left = (index + 1) - 8 - 8 - 1;
+
+        var down_right = (index + 1) + 8 + 8 + 1;
+        var down_left = (index + 1) + 8 + 8 - 1;
+
+        var right_up = (index + 1) - 8 + 2;
+        var right_down = (index + 1) + 8 + 2;
+
+        var left_up = (index + 1) - 8 - 2;
+        var left_down = (index + 1) + 8 - 2;
+
+        if (up_right >= 1 && up_right % 8 != 1)
+        {
+            var s = "." + up_right;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(up_right);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(up_right);
+                }
+            }
+        }
+        
+        if (up_left >= 1 && up_left % 8 != 0)
+        {
+            var s = "." + up_left;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(up_left);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(up_left);
+                }
+            }
+        }
+
+        if (down_right <= 64 && down_right % 8 != 1)
+        {
+            var s = "." + down_right;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(down_right);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(down_right);
+                }
+            }
+        }
+
+        if (down_left <= 64 && down_left % 8 != 0)
+        {
+            var s = "." + down_left;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(down_left);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(down_left);
+                }
+            }
+        }
+
+        if (right_up >= 1 && right_up % 8 != 1 && right_up % 8 != 2)
+        {
+            var s = "." + right_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_up);
+                }
+            }
+        }
+
+        if (right_down <= 64 && right_down % 8 != 1 && right_down % 8 != 2)
+        {
+            var s = "." + right_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_down);
+                }
+            }
+        }
+
+        if (left_up >= 1 && left_up % 8 != 0 && left_up % 8 != 7)
+        {
+            var s = "." + left_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_up);
+                }
+            }
+        }
+
+        if (left_down <= 64 && left_down % 8 != 0 && left_down % 8 != 7)
+        {
+            var s = "." + left_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_down);
+                }
+            }
+        }
+
+
+
+    }
+
+    function moveBlackKnight(index)
+    {
+        var s = "." + (index + 1);
+
+        var up_right = (index + 1) - 8 - 8 + 1;
+        var up_left = (index + 1) - 8 - 8 - 1;
+
+        var down_right = (index + 1) + 8 + 8 + 1;
+        var down_left = (index + 1) + 8 + 8 - 1;
+
+        var right_up = (index + 1) - 8 + 2;
+        var right_down = (index + 1) + 8 + 2;
+
+        var left_up = (index + 1) - 8 - 2;
+        var left_down = (index + 1) + 8 - 2;
+
+        if (up_right >= 1 && up_right % 8 != 1)
+        {
+            var s = "." + up_right;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(up_right);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(up_right);
+                }
+            }
+        }
+
+        if (up_left >= 1 && up_left % 8 != 0)
+        {
+            var s = "." + up_left;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(up_left);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(up_left);
+                }
+            }
+        }
+
+        if (down_right <= 64 && down_right % 8 != 1)
+        {
+            var s = "." + down_right;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(down_right);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(down_right);
+                }
+            }
+        }
+
+        if (down_left <= 64 && down_left % 8 != 0)
+        {
+            var s = "." + down_left;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(down_left);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(down_left);
+                }
+            }
+        }
+
+        if (right_up >= 1 && right_up % 8 != 1 && right_up % 8 != 2)
+        {
+            var s = "." + right_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_up);
+                }
+            }
+        }
+
+        if (right_down <= 64 && right_down % 8 != 1 && right_down % 8 != 2)
+        {
+            var s = "." + right_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_down);
+                }
+            }
+        }
+
+        if (left_up >= 1 && left_up % 8 != 0 && left_up % 8 != 7)
+        {
+            var s = "." + left_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_up);
+                }
+            }
+        }
+
+        if (left_down <= 64 && left_down % 8 != 0 && left_down % 8 != 7)
+        {
+            var s = "." + left_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_down);
+                }
+            }
+        }
+
+
+    }
+
+    function moveWhiteBishop(index)
+    {
+        var s = "." + (index + 1);
+
+        var right_up = (index + 1) - 8 + 1;
+
+        var right_down = (index + 1) + 8 + 1;
+
+        var left_up = (index + 1) - 8 - 1;
+
+        var left_down = (index + 1) + 8 - 1;
+
+        var count = 0;
+
+        while (right_up >= 1 && right_up % 8 != 1)
+        {
+            var s = "." + right_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_up);
+                }
+
+                break;
+            }
+
+            right_up -= 8;
+            right_up += 1;
+        }
+
+        count = 0;
+
+        while (right_down <= 64 && right_down % 8 != 1)
+        {
+            var s = "." + right_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_down);
+                }
+
+                break;
+            }
+
+            right_down += 8;
+            right_down += 1;
+        }
+
+        count = 0;
+
+        while (left_up >= 1 && left_up % 8 != 0)
+        {
+            var s = "." + left_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_up);
+                }
+
+                break;
+            }
+
+            left_up -= 8;
+            left_up -= 1;
+        }
+
+        count = 0;
+
+        while (left_down <= 64 && left_down % 8 != 0)
+        {
+            var s = "." + left_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory white-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("black-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_down);
+                }
+
+                break;
+            }
+
+            left_down += 8;
+            left_down -= 1;
+        }
+
+
+    }
+
+    function moveBlackBishop(index)
+    {
+        var s = "." + (index + 1);
+
+        var right_up = (index + 1) - 8 + 1;
+
+        var right_down = (index + 1) + 8 + 1;
+
+        var left_up = (index + 1) - 8 - 1;
+
+        var left_down = (index + 1) + 8 - 1;
+
+        var count = 0;
+
+        while (right_up >= 1 && right_up % 8 != 1)
+        {
+            var s = "." + right_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_up);
+                }
+
+                break;
+            }
+
+            right_up -= 8;
+            right_up += 1;
+        }
+
+        count = 0;
+
+        while (right_down <= 64 && right_down % 8 != 1)
+        {
+            var s = "." + right_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(right_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(right_down);
+                }
+
+                break;
+            }
+
+            right_down += 8;
+            right_down += 1;
+        }
+
+        count = 0;
+
+        while (left_up >= 1 && left_up % 8 != 0)
+        {
+            var s = "." + left_up;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_up);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_up);
+                }
+
+                break;
+            }
+
+            left_up -= 8;
+            left_up -= 1;
+        }
+
+        count = 0;
+
+        while (left_down <= 64 && left_down % 8 != 0)
+        {
+            var s = "." + left_down;
+            if ($(s).hasClass("piece") == 0)
+            {
+                if ($(s).hasClass("victory black-v") == 0)
+                {
+                    $(s).html('<img class = "move" src="./images/new_dot.png" alt="">');
+                    possible_moves.push(left_down);
+                }
+            }
+
+            else
+            {
+                if ($(s + " img").hasClass("white-piece") == 1)
+                {
+                    $(s + " img").toggleClass("circle");
+                    possible_moves.push(left_down);
+                }
+
+                break;
+            }
+
+            left_down += 8;
+            left_down -= 1;
+        }
+
+
+    }
+
   function remove_moves(to_skip)
   {
         for (var i = 0; i < possible_moves.length; i++)
@@ -1734,6 +2584,8 @@ function surroundWhiteRedPiece()
     var s_up_right = "." + (bottom_red - 7);
     var s_up_left = "." + (bottom_red - 9);
 
+    var s_down = "." + (bottom_red + 8);
+
     $(s_right).html('<img class="white-piece pawn" src="./images/pawn.png" alt="white-rook">');
     $(s_right).toggleClass("piece");
 
@@ -1748,6 +2600,9 @@ function surroundWhiteRedPiece()
 
     $(s_up_left).html('<img class="white-piece pawn" src="./images/pawn.png" alt="white-rook">');
     $(s_up_left).toggleClass("piece");
+
+    $(s_down).html('<img class="white-piece knight" src="./images/white_knight.png" alt="white-rook">');
+    $(s_down).toggleClass("piece");
     
 }
 
@@ -1761,6 +2616,8 @@ function surroundBlackRedPiece()
     var s_down = "." + (top_red  + 8);
     var s_down_right = "." + (top_red + 7);
     var s_down_left = "." + (top_red + 9);
+
+    var s_up = "." + (top_red - 8);
     
 
      
@@ -1781,6 +2638,10 @@ function surroundBlackRedPiece()
     $(s_down_left).toggleClass("piece");
 
    
-    
+    $(s_up).html('<img class="black-piece knight" src="./images/black_knight.png" alt="white-rook">');
+    $(s_up).toggleClass("piece");
 
 }
+
+// to do -
+// pawn promotion done
