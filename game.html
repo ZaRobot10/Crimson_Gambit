@@ -74,12 +74,14 @@
 @media (max-width: 800px) {
   .container {
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }
   
   .container > * {
-    width: 25%;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -185,10 +187,12 @@
   <div class="whos-turn">
     <h1>White's Turn</h1>
     <h2>Place Your Queen</h2>
+    <h3>Moves left before the battle begins: 6</h3>
 
-    <button class="upgrade daqueen">Upgrade Your Queen</button>
-    <button class="upgrade darook">Upgrade Your Rook</button>
+    <button class="upgrade daqueen">Upgrade Your Queen <img class = "small_icon_queen" src="./images/white_queen.png" alt=""></button>
+    <button class="upgrade darook">Upgrade Your Rook <img class = "small_icon_rook" src="./images/white_rook.png" alt=""></button>
   </div>
+  
 </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
