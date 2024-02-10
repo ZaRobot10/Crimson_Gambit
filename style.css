@@ -67,10 +67,8 @@
 
 }
 
-.upgrade{
-
-    /* move the button to the bottom  and with alignment to the h1 tag* vertically*/
-
+.upgrade {
+    /* move the button to the bottom and align to the h1 tag vertically */
     position: absolute;
     top: 80%;
     width: 200px;
@@ -79,14 +77,16 @@
     color: white;
     border: none;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Align items horizontally */
     font-size: 16px;
     cursor: pointer;
     border-radius: 12px;
     z-index: 1;
-    
 }
+
+
 
 .darook{
     top: 90%;
@@ -104,3 +104,18 @@
         display: none;
         
   }
+
+  .small_icon_queen
+  {
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+  }
+
+    .small_icon_rook
+    {
+        margin-left: 9px;
+        width: 20px;
+        height: 20px;
+    }
+
